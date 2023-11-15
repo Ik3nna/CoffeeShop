@@ -10,3 +10,8 @@ export type NavigationProps = {
 export type IconProps = {
     [props: string]: any
 }
+
+// TopTabs type
+export type TopTabsProps = {
+    rightTab: any
+}

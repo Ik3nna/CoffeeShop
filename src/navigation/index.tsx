@@ -53,9 +53,15 @@ function BottomTabNavigator () {
         tabBarActiveTintColor: theme.activeHex,
         tabBarInactiveTintColor: theme.inactiveIconsHex,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: { position: "absolute", backgroundColor: theme.tabBgHex },
+        tabBarStyle: { 
+          position: "absolute", 
+          backgroundColor: theme.tabBgHex, 
+          elevation: 0, 
+          borderTopColor: 'transparent',
+          shadowColor: 'transparent'
+        },
         tabBarBackground: ()=> (
-          <BlurView intensity={15} style={styles.blur} />
+          <BlurView intensity={15} blurReductionFactor={100} style={styles.blur} />
         )
         })
       }
