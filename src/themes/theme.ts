@@ -10,13 +10,12 @@ export const theme = {
         subBgHex: '#141921',
         secondarySubBgHex: '#21262E',
         primaryRGBA: 'rgba(0,0,0,0.7)',
-
-        primaryBlackRGBA: 'rgba(12,15,20,0.5)',
+        tabBgHex: 'rgba(12,15,20,0.1)',
     },
     light: {
         heartHex: '#DC3535',
         activeHex: '#D17842',
-        backgroundHex: '#252A32',
+        backgroundHex: '#FFFFFF',
         inactiveTabHex: '#52555A',
         subTextHex: '#AEAEAE',
         inactiveIconsHex: '#4E5053',
@@ -24,7 +23,6 @@ export const theme = {
         subBgHex: '#141921',
         secondarySubBgHex: '#21262E',
         primaryRGBA: 'rgba(0,0,0,0.7)',
-
-        primaryBlackRGBA: 'rgba(12,15,20,0.5)',
+        tabBgHex: 'rgba(12,15,20,0.1)',
     }
 }
