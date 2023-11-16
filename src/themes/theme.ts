@@ -12,6 +12,8 @@ export const theme = {
         secondarySubBgHex: '#21262E',
         primaryRGBA: 'rgba(0,0,0,0.7)',
         tabBgHex: 'rgba(12,15,20,0.1)',
+        cardHex: '#252a32',
+        cardSubHex: 'rgba(38, 43, 51, 0.00)'
     },
     light: {
         heartHex: '#DC3535',
@@ -26,5 +28,7 @@ export const theme = {
         secondarySubBgHex: '#21262E',
         primaryRGBA: 'rgba(0,0,0,0.7)',
         tabBgHex: 'rgba(12,15,20,0.1)',
+        cardHex: '#252a32',
+        cardSubHex: 'rgba(38, 43, 51, 0.00)'
     }
 }

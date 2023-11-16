@@ -61,8 +61,8 @@ const TopTabs = ({ rightTab }: TopTabsProps) => {
           <TouchableOpacity onPress={toggleMode} style={styles.toggle_btn}>
             {
               darkMode ?
-                <Icon type="feather" name="sun" size={24} color={theme.textHex} style={[styles.btn, { opacity: darkMode ? 0.2 : 1 }]} /> :
-                <Icon type="octicons" name="moon" size={24} color={theme.textHex} style={[styles.btn, { opacity: darkMode ? 0.2 : 1 }]} />
+                <Icon type="feather" name="sun" size={24} color={theme.textHex} style={[styles.btn, { opacity: darkMode ? 0.4 : 1 }]} /> :
+                <Icon type="octicons" name="moon" size={24} color={theme.textHex} style={[styles.btn, { opacity: darkMode ? 0.4 : 1 }]} />
             }
           </TouchableOpacity>
         }
