@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontAwesome, Feather, MaterialIcons, Ionicons, FontAwesome5, Foundation, Octicons, } from '@expo/vector-icons';
+import { FontAwesome, Feather, MaterialIcons, Ionicons, FontAwesome5, Foundation, Octicons, AntDesign, } from '@expo/vector-icons';
 import { IconProps } from '../../types';
 
 const getIconFont = (type: any) => {
@@ -13,9 +13,11 @@ const getIconFont = (type: any) => {
     case "foundation":
         return Foundation;
     case "ionicons":
-        return Ionicons
+        return Ionicons;
     case "octicons":
-      return Octicons
+      return Octicons;
+    case "ant":
+      return AntDesign;
     default:
       return FontAwesome;
   }

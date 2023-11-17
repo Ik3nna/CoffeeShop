@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners'
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Appearance } from 'react-native';
+// import { Appearance } from 'react-native';
 import { useCustomFonts } from './src/hooks/useCustomFonts';
 import themeContext from './src/themes/themeContext';
 import { theme } from './src/themes/theme';
@@ -42,23 +42,17 @@ export default function App() {
       saveThemeMode(data);
     })
 
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      let data: boolean;
-
-      if (colorScheme === "dark") {
-        data = true;
-        setDarkMode(data);
-        saveThemeMode(data)
-      } else {
-        data = false;
-        setDarkMode(false);
-        saveThemeMode(data);
-      }
-    })
+    // Changing according to user's theme mode
+    // const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+    //   let data= colorScheme === "dark" ? true : false
+    //   saveThemeMode(data);
+    //   setDarkMode(data);
+  
+    // })
 
     return ()=> {
       EventRegister.removeAllListeners();
-      subscription.remove();
+      // subscription.remove();
     }
   }, [darkMode]);
 

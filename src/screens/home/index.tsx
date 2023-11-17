@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView, TextI
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useThemeContext } from "../../themes/themeContext"
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import TopTabs from '../../components/topTabs';
 import Icon from '../../components/icons';
 import { getFontSize } from '../../utils/getFontSize';
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   icons: {
-    opacity: 0.4
+    opacity: 0.7
   },
   header: {
     fontFamily: "poppins_semibold",

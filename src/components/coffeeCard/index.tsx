@@ -5,10 +5,11 @@ import { useThemeContext } from '../../themes/themeContext'
 import { CoffeeCardProps } from '../../types'
 import { getFontSize } from '../../utils/getFontSize'
 import Button from '../button'
+import Icon from '../icons'
 
 const { width, height } = Dimensions.get("window");
 
-const CoffeeCard = ({ name, image, rating, ingredient, currency, price }: CoffeeCardProps) => {
+const CoffeeCard = React.memo(({ name, image, rating, ingredient, currency, price }: CoffeeCardProps) => {
   const theme = useThemeContext();
 
   return (
@@ -17,7 +18,11 @@ const CoffeeCard = ({ name, image, rating, ingredient, currency, price }: Coffee
         locations={[0.04,0.9193]}
         style={styles.container}
     >
-        <View>
+        <View style={styles.img_container}>
+            <View style={[styles.star, { backgroundColor: theme.primaryRGBA }]}>
+                <Icon type="ant" name="star" size={15} color={theme.activeHex} />
+                <Text style={[styles.rating, { color: theme.textHex }]}>{rating}</Text>
+            </View>
             <Image 
                 source={image} 
                 alt="coffee" 
@@ -50,7 +55,7 @@ const CoffeeCard = ({ name, image, rating, ingredient, currency, price }: Coffee
        </View>
     </LinearGradient>
   )
-}
+})
 
 export default CoffeeCard
 
@@ -59,6 +64,26 @@ const styles = StyleSheet.create({
         borderRadius: 23,
         paddingHorizontal: 10,
         paddingVertical: 15
+    },
+    img_container: {
+        position: "relative"
+    },
+    star: {
+        position: "absolute",
+        right: 0,
+        borderBottomLeftRadius: 23,
+        borderTopRightRadius: 23,
+        paddingVertical: "4%",
+        paddingHorizontal: "6%",
+        zIndex: 2,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: 5
+    },
+    rating: {
+        fontFamily: "poppins_semibold",
+        fontSize: getFontSize(0.017)
     },
     sub_container: {
         flexDirection: "column",
