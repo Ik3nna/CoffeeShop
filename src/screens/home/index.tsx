@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView, TextI
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useThemeContext } from "../../themes/themeContext"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TopTabs from '../../components/topTabs';
 import Icon from '../../components/icons';
 import { getFontSize } from '../../utils/getFontSize';
@@ -15,7 +15,16 @@ const { width, height } = Dimensions.get("window");
 const Home = () => {
   const theme = useThemeContext();
   const [selectedTab, setselectedTab] = useState("All");
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredList, setFilteredList] = useState<any>(CoffeeData)
   const BottomTabBarHeight = useBottomTabBarHeight();
+
+  const getSearchItem = (data: string)=> {
+    const searchedItem = CoffeeData.filter((item: any)=> {
+      return item.name.toLowerCase().includes(data.toLowerCase());
+    });
+    setFilteredList(searchedItem);
+  }
 
   const getCategories = () => {
     let uniqueSet = new Set();
@@ -38,6 +47,17 @@ const Home = () => {
     }
   }
 
+  useEffect(()=>{
+    if (selectedTab !== "All") {
+      const tabItems = CoffeeData.filter((item: any)=> {
+        return item.name.toLowerCase().includes(selectedTab.toLowerCase());
+      });
+      setFilteredList(tabItems);
+    } else {
+      setFilteredList(CoffeeData)
+    }
+  }, [selectedTab])
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -56,42 +76,54 @@ const Home = () => {
             <Icon type="ionicons" name="search" size={24} color={theme.inactiveTabHex} style={styles.search} />
             <TextInput 
               placeholder='Find your Coffee...'
+              value={searchInput}
+              onChangeText={(value)=> {
+                setSearchInput(value); 
+                getSearchItem(value)
+              }}
               placeholderTextColor={theme.inactiveTabHex}
               style={[styles.input, { backgroundColor: theme.subBgHex, color: theme.inactiveTabHex }]}
             />
           </View>
 
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false} 
-            style={styles.tabs_container}
-          >
-            {getCategories().map((item: any, index: number)=> (
-              <TouchableOpacity style={styles.tab_btn} key={index} onPress={()=>setselectedTab(item)}>
-                <Text style={[styles.tabs, { color: getTabColors(item) }]}>{item}</Text>
-                <View style={[styles.drop, { backgroundColor: item === selectedTab ? theme.activeHex : null }]} />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {searchInput === "" && 
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false} 
+              style={styles.tabs_container}
+            >
+              {getCategories().map((item: any, index: number)=> (
+                <TouchableOpacity style={styles.tab_btn} key={index} onPress={()=>setselectedTab(item)}>
+                  <Text style={[styles.tabs, { color: getTabColors(item) }]}>{item}</Text>
+                  <View style={[styles.drop, { backgroundColor: item === selectedTab ? theme.activeHex : null }]} />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          }
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.coffee_list}
-          >
-            {CoffeeData.map((item)=>(
-              <TouchableOpacity key={item.id} style={styles.tab_btn}>
-                <CoffeeCard 
-                  name={item.name}
-                  image={item.imagelink_square}
-                  rating={item.average_rating}
-                  ingredient={item.special_ingredient}
-                  currency={item.prices[0].currency}
-                  price={item.prices[0].price}
-                />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {filteredList.length > 0 ?
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.coffee_list}
+            >
+              {filteredList.map((item: any)=>(
+                <TouchableOpacity key={item.id} style={styles.tab_btn}>
+                  <CoffeeCard 
+                    name={item.name}
+                    image={item.imagelink_square}
+                    rating={item.average_rating}
+                    ingredient={item.special_ingredient}
+                    currency={item.prices[0].currency}
+                    price={item.prices[0].price}
+                  />
+                </TouchableOpacity>
+              ))}
+            </ScrollView> :
+            <View style={styles.nothing_container}>
+              <Text style={[styles.nothing, { color: theme.textHex }]}>Nothing to show here</Text>
+            </View>
+          }
         </View>
 
         <Text style={[styles.beans, { color: theme.textHex }]}>Coffee beans</Text>
@@ -165,6 +197,16 @@ const styles = StyleSheet.create({
     fontFamily: "poppins_semibold",
     fontSize: getFontSize(0.027),
   }, 
+  nothing_container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: "30%"
+  },
+  nothing: {
+    fontFamily: "poppins_semibold",
+    fontSize: getFontSize(0.027)
+  },
   drop: {
     width: 10,
     height: 10,
