@@ -13,7 +13,8 @@ export type IconProps = {
 
 // TopTab type
 export type TopTabProps = {
-    style?: any
+    style?: any,
+    item?: any
 }
 
 // CoffeeCard type 
@@ -50,4 +51,18 @@ export type FlashCardProps = {
     color: string,
     content: string,
     border?: string
+}
+
+// FavouriteList type
+export type FavouriteListProps = {
+    id: string,
+    image: string,
+    name: string,
+    ingredients: string,
+    special_ingredient: string,
+    type: string,
+    rating: number,
+    count: string,
+    roasted: string,
+    description: string
 }

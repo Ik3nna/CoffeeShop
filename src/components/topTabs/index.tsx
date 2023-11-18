@@ -6,8 +6,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners';
 import { CART_ITEM, PAYMENT } from '../../constants/routeName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
 import Icon from '../icons';
 import { TopTabProps } from '../../types';
+import { favouriteActions } from '../../store/favourite-slice';
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,12 +28,26 @@ const getTheme = async ()=> {
   return null
 }  
 
-const TopTabs = ({ style }: TopTabProps) => {
+const TopTabs = ({ style, item }: TopTabProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const [darkMode, setDarkMode] = React.useState<boolean>();
   const [toggleHeart, setToggleHeart] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const data = {
+    id: item?.id,
+    image: item?.imagelink_portrait,
+    name: item?.name,
+    ingredients: item?.ingredients,
+    special_ingredient: item?.special_ingredient,
+    type: item?.type,
+    rating: item?.average_rating,
+    count: item?.ratings_count,
+    roasted: item?.roasted,
+    description: item?.description
+  }
 
   const toggleMode = () => {
     const newValue = !darkMode;
@@ -40,7 +56,15 @@ const TopTabs = ({ style }: TopTabProps) => {
   };
 
   const handleFavourites = ()=> {
-    setToggleHeart((prev)=>!prev)
+    setToggleHeart((prev)=>!prev);
+
+    if (data) {
+      if (toggleHeart === true) {
+        dispatch(favouriteActions.addToFavourites(data));
+      } else {
+        dispatch(favouriteActions.removeFromFavourites(data.id));
+      }
+    }
   }
 
   useEffect(()=>{
@@ -84,7 +108,7 @@ const TopTabs = ({ style }: TopTabProps) => {
         {
           route.name === CART_ITEM 
           ? 
-            <TouchableOpacity style={styles.btn} onPress={handleFavourites}>
+            <TouchableOpacity style={styles.btn} onPress={()=>handleFavourites()}>
               <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
             </TouchableOpacity>
           : 

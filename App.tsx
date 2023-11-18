@@ -9,7 +9,10 @@ import themeContext from './src/themes/themeContext';
 import { theme } from './src/themes/theme';
 import { MainNavigator } from './src/navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import store from './src/store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistedStore } from './src/store';
 
 export default function App() {
   const { fontsLoaded } = useCustomFonts();
@@ -61,11 +64,15 @@ export default function App() {
   }
 
   return (
-    <themeContext.Provider value={darkMode === true ? theme.dark : theme.light}>
-      <NavigationContainer>
-        <StatusBar style={darkMode === true ? "light" : "dark"} />
-        <MainNavigator />
-      </NavigationContainer>
-    </themeContext.Provider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistedStore}>
+        <themeContext.Provider value={darkMode === true ? theme.dark : theme.light}>
+          <NavigationContainer>
+            <StatusBar style={darkMode === true ? "light" : "dark"} />
+            <MainNavigator />
+          </NavigationContainer>
+        </themeContext.Provider>
+      </PersistGate>
+    </Provider>
   );
 }

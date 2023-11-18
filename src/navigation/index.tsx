@@ -67,9 +67,9 @@ function BottomTabNavigator () {
       }
     >
       <Tab.Screen name={HOME} component={Home} options={{ headerShown: false }} />
-      <Tab.Screen name={CART} component={Cart} />
-      <Tab.Screen name={FAVOURITES} component={Favourites} />
-      <Tab.Screen name={ORDER_HISTORY} component={OrderHistory} />
+      <Tab.Screen name={CART} component={Cart} options={{ headerShown: false }} />
+      <Tab.Screen name={FAVOURITES} component={Favourites} options={{ headerShown: false }} />
+      <Tab.Screen name={ORDER_HISTORY} component={OrderHistory} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }

@@ -48,7 +48,7 @@ const CartItem = () => {
     <View style={styles.container}>
       <StatusBar style={"light"} />
       <ImageBackground source={item.imagelink_portrait} style={styles.imgBackground}>
-        <TopTabs style={styles.tab} />
+        <TopTabs style={styles.tab} item={item} />
 
         <View style={[styles.flash_card, { backgroundColor: theme.primaryRGBA }]}>
           <View style={styles.details}>
@@ -78,7 +78,7 @@ const CartItem = () => {
                 w={width * 0.13}
                 h={width * 0.13}
                 icon={
-                  item.id.toLowerCase().includes('c') 
+                  item.id.includes('C') 
                   ? <Image source={milk} alt="milk" style={styles.img} />
                   : <Image source={africa} alt="africa" style={styles.img} />
                 }

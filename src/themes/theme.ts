@@ -3,9 +3,9 @@ export const theme = {
         heartHex: '#DC3535',    
         activeHex: '#D17842',
         backgroundHex: '#0C0F14',
-        arrowHex: "#383A3E",    // 1
+        arrowHex: "#383A3E",    
         inactiveTabHex: '#52555A',
-        subTextHex: '#AEAEAE',  // 2
+        subTextHex: '#AEAEAE',  
         inactiveIconsHex: '#4E5053',
         textHex: '#FFFFFF',
         subBgHex: '#141921',
@@ -19,9 +19,9 @@ export const theme = {
         heartHex: '#DC3535',
         activeHex: '#6C7074',
         backgroundHex: '#FFFFFF',
-        arrowHex: "#383A3E",
+        arrowHex: "#555555",
         inactiveTabHex: '#333',
-        subTextHex: '#AEAEAE',
+        subTextHex: '#000000',
         inactiveIconsHex: '#B0B0B0',
         textHex: '#0C0F14',
         subBgHex: '#F4F4F4',
