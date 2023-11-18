@@ -2,13 +2,16 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView, TextI
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useThemeContext } from "../../themes/themeContext"
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import TopTabs from '../../components/topTabs';
 import Icon from '../../components/icons';
 import { getFontSize } from '../../utils/getFontSize';
 import CoffeeData from '../../data/CoffeeData';
 import BeansData from '../../data/BeansData';
 import CoffeeCard from '../../components/coffeeCard';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CART_ITEM } from '../../constants/routeName';
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,6 +21,7 @@ const Home = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filteredList, setFilteredList] = useState<any>(CoffeeData)
   const BottomTabBarHeight = useBottomTabBarHeight();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   const getSearchItem = (data: string)=> {
     const searchedItem = CoffeeData.filter((item: any)=> {
@@ -26,7 +30,7 @@ const Home = () => {
     setFilteredList(searchedItem);
   }
 
-  const getCategories = () => {
+  const getCategories = useCallback(() => {
     let uniqueSet = new Set();
 
     CoffeeData.forEach((obj: any)=> {
@@ -37,15 +41,15 @@ const Home = () => {
     tabsArray.unshift("All");
 
     return tabsArray;
-  }
+  }, [])
 
-  const getTabColors = (selected: string)=> {
+  const getTabColors = useCallback((selected: string)=> {
     if (selectedTab === selected) {
       return theme.activeHex;
     } else {
       return theme.inactiveTabHex;
     }
-  }
+  },[selectedTab, theme])
 
   useEffect(()=>{
     if (selectedTab !== "All") {
@@ -61,13 +65,7 @@ const Home = () => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <TopTabs 
-          rightTab={
-            <TouchableOpacity>
-              <Icon type="ionicons" name="ios-people-outline" size={24} color={theme.textHex} style={styles.icons} />
-            </TouchableOpacity>
-          }
-        />
+        <TopTabs />
 
         <Text style={[styles.header, { color: theme.textHex }]}>Find the best{'\n'}coffee for you</Text>
 
@@ -108,14 +106,14 @@ const Home = () => {
               style={styles.coffee_list}
             >
               {filteredList.map((item: any)=>(
-                <TouchableOpacity key={item.id} style={styles.tab_btn}>
+                <TouchableOpacity key={item.id} style={styles.tab_btn} onPress={()=>navigation.push(CART_ITEM, { item: item })}>
                   <CoffeeCard 
                     name={item.name}
                     image={item.imagelink_square}
                     rating={item.average_rating}
                     ingredient={item.special_ingredient}
-                    currency={item.prices[0].currency}
-                    price={item.prices[0].price}
+                    currency={item.prices[2].currency}
+                    price={item.prices[2].price}
                   />
                 </TouchableOpacity>
               ))}
@@ -134,14 +132,14 @@ const Home = () => {
           style={[styles.coffee_list, { marginBottom: BottomTabBarHeight }]}
         >
           {BeansData.map((item)=>(
-            <TouchableOpacity key={item.id} style={styles.tab_btn}>
+            <TouchableOpacity key={item.id} style={styles.tab_btn} onPress={()=>navigation.push(CART_ITEM, { item: item })}>
               <CoffeeCard 
                 name={item.name}
                 image={item.imagelink_square}
                 rating={item.average_rating}
                 ingredient={item.special_ingredient}
-                currency={item.prices[0].currency}
-                price={item.prices[0].price}
+                currency={item.prices[2].currency}
+                price={item.prices[2].price}
               />
             </TouchableOpacity>
           ))}
@@ -156,9 +154,6 @@ export default Home
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  icons: {
-    opacity: 0.7
   },
   header: {
     fontFamily: "poppins_semibold",
@@ -201,7 +196,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: "30%"
+    paddingVertical: "25%"
   },
   nothing: {
     fontFamily: "poppins_semibold",

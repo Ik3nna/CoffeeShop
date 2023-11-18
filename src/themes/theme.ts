@@ -1,11 +1,11 @@
 export const theme = {
     dark: {
-        heartHex: '#DC3535',    // 1
+        heartHex: '#DC3535',    
         activeHex: '#D17842',
         backgroundHex: '#0C0F14',
-        arrowHex: "#383A3E",    // 2
+        arrowHex: "#383A3E",    // 1
         inactiveTabHex: '#52555A',
-        subTextHex: '#AEAEAE',  // 3
+        subTextHex: '#AEAEAE',  // 2
         inactiveIconsHex: '#4E5053',
         textHex: '#FFFFFF',
         subBgHex: '#141921',

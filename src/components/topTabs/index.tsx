@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { Dimensions, StyleSheet, View, Switch, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeContext } from '../../themes/themeContext';
-import { TopTabsProps } from '../../types';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners';
 import { CART_ITEM, PAYMENT } from '../../constants/routeName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from '../icons';
+import { TopTabProps } from '../../types';
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,16 +26,22 @@ const getTheme = async ()=> {
   return null
 }  
 
-const TopTabs = ({ rightTab }: TopTabsProps) => {
+const TopTabs = ({ style }: TopTabProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const [darkMode, setDarkMode] = React.useState<boolean>();
+  const [toggleHeart, setToggleHeart] = useState(false);
+  const navigation = useNavigation();
 
   const toggleMode = () => {
     const newValue = !darkMode;
     setDarkMode(newValue);
     EventRegister.emit("ChangeTheme", newValue);
   };
+
+  const handleFavourites = ()=> {
+    setToggleHeart((prev)=>!prev)
+  }
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -47,7 +53,7 @@ const TopTabs = ({ rightTab }: TopTabsProps) => {
   },[])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <LinearGradient
         colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
         locations={[0.0428, 0.9352]}
@@ -56,9 +62,11 @@ const TopTabs = ({ rightTab }: TopTabsProps) => {
         {
           route.name === PAYMENT || route.name === CART_ITEM 
           ? 
-            <Icon type="feather" name="chevron-left" size={25} color={theme.arrowHex} />
+            <TouchableOpacity style={styles.btn} onPress={()=>navigation.goBack()}>
+              <Icon type="feather" name="chevron-left" size={27} color={theme.arrowHex} />
+            </TouchableOpacity>
           : 
-          <TouchableOpacity onPress={toggleMode} style={styles.toggle_btn}>
+          <TouchableOpacity onPress={toggleMode} style={styles.btn}>
             {
               darkMode ?
                 <Icon type="feather" name="sun" size={24} color={theme.textHex} style={{ opacity: darkMode ? 0.4 : 0.7 }} /> :
@@ -73,7 +81,17 @@ const TopTabs = ({ rightTab }: TopTabsProps) => {
         locations={[0.0428, 0.9352]}
         style={[styles.right_tab, { borderColor: theme.secondarySubBgHex }]}
       >
-        {rightTab}
+        {
+          route.name === CART_ITEM 
+          ? 
+            <TouchableOpacity style={styles.btn} onPress={handleFavourites}>
+              <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
+            </TouchableOpacity>
+          : 
+          <TouchableOpacity style={styles.btn}>
+              <Icon type="ionicons" name="ios-people-outline" size={24} color={theme.textHex} style={{ opacity: darkMode ? 0.4 : 0.7 }} />
+            </TouchableOpacity>
+        }
       </LinearGradient>
     </View>
   )
@@ -95,7 +113,7 @@ const styles = StyleSheet.create({
     height: width * 0.1,
     borderRadius: (width * 0.1) / 3
   },
-  toggle_btn: {
+  btn: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"

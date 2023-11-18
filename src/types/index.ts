@@ -11,9 +11,9 @@ export type IconProps = {
     [props: string]: any
 }
 
-// TopTabs type
-export type TopTabsProps = {
-    rightTab: any
+// TopTab type
+export type TopTabProps = {
+    style?: any
 }
 
 // CoffeeCard type 
@@ -36,4 +36,18 @@ export type ButtonProps = {
     height?: number,
     radius?: number,
     size?: number
+}
+
+// FlashCard type
+export type FlashCardProps = {
+    w: number,
+    h: number,
+    borderRadius: number,
+    icon?: any,
+    size: number,
+    font: string,
+    bgColor: string,
+    color: string,
+    content: string,
+    border?: string
 }
