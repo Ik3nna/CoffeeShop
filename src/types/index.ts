@@ -67,3 +67,9 @@ export type FavouriteListProps = {
     roasted: string,
     description: string
 }
+
+// Toast type
+export type ToastProps = {
+    message: string,
+    dependency: any
+}

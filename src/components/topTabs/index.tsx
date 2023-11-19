@@ -12,6 +12,7 @@ import { FavouriteListProps, TopTabProps } from '../../types';
 import { favouriteActions } from '../../store/favourite-slice';
 import { RootState } from '../../store';
 import { getFontSize } from '../../utils/getFontSize';
+import Toast from 'react-native-root-toast';
 
 const { width, height } = Dimensions.get("window");
 
@@ -68,6 +69,18 @@ const TopTabs = ({ style, item, text }: TopTabProps) => {
     } else {
       dispatch(favouriteActions.addToFavourites(data));
     }
+
+    Toast.show(!toggleHeart ? "Added to favourites successfully!!" : "Removed from favourites!!", {
+      duration: 2000,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      backgroundColor: theme.textHex,
+      textColor: theme.backgroundHex,
+      opacity: 0.9,
+      textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
+    });
   }
 
   useEffect(()=>{

@@ -13,6 +13,7 @@ import store from './src/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistedStore } from './src/store';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 export default function App() {
   const { fontsLoaded } = useCustomFonts();
@@ -67,10 +68,12 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistedStore}>
         <themeContext.Provider value={darkMode === true ? theme.dark : theme.light}>
-          <NavigationContainer>
-            <StatusBar style={darkMode === true ? "light" : "dark"} />
-            <MainNavigator />
-          </NavigationContainer>
+          <RootSiblingParent>
+            <NavigationContainer>
+              <StatusBar style={darkMode === true ? "light" : "dark"} />
+              <MainNavigator />
+            </NavigationContainer>
+          </RootSiblingParent>
         </themeContext.Provider>
       </PersistGate>
     </Provider>

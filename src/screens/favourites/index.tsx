@@ -19,6 +19,7 @@ import bean from "../../assets/icons/bean.png";
 import africa from "../../assets/icons/location.png";
 import coffee from "../../assets/icons/coffee.png";
 import milk from "../../assets/icons/milk.png";
+import Toast from 'react-native-root-toast';
 
 
 const { width, height } = Dimensions.get("window");
@@ -30,6 +31,22 @@ const Favourites = () => {
   const BottomTabBarHeight = useBottomTabBarHeight();
   const dispatch = useDispatch();
   const [toggleHeart, setToggleHeart] = useState(true);
+
+  const handleFavouritesList = (data: string)=> {
+    dispatch(favouriteActions.removeFromFavourites(data))
+
+    Toast.show("Removed from favourites!!", {
+      duration: 2000,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      backgroundColor: theme.textHex,
+      textColor: theme.backgroundHex,
+      opacity: 0.9,
+      textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
+    });
+  }
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
@@ -59,7 +76,7 @@ const Favourites = () => {
                       locations={[0.0428, 0.9352]}
                       style={[styles.heart_container, { borderColor: theme.secondarySubBgHex }]}
                     >
-                      <TouchableOpacity onPress={()=>dispatch(favouriteActions.removeFromFavourites(item.id))}>
+                      <TouchableOpacity onPress={()=>handleFavouritesList(item.id)}>
                         <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
                       </TouchableOpacity>
                     </LinearGradient>
