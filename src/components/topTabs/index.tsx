@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Dimensions, StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeContext } from '../../themes/themeContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import Icon from '../icons';
 import { FavouriteListProps, TopTabProps } from '../../types';
 import { favouriteActions } from '../../store/favourite-slice';
 import { RootState } from '../../store';
+import { getFontSize } from '../../utils/getFontSize';
 
 const { width, height } = Dimensions.get("window");
 
@@ -29,7 +30,7 @@ const getTheme = async ()=> {
   return null
 }  
 
-const TopTabs = ({ style, item }: TopTabProps) => {
+const TopTabs = ({ style, item, text }: TopTabProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const [darkMode, setDarkMode] = React.useState<boolean>();
@@ -102,6 +103,8 @@ const TopTabs = ({ style, item }: TopTabProps) => {
         }
       </LinearGradient>
 
+      <Text style={[styles.text, { color: theme.textHex }]}>{text}</Text>
+
       <LinearGradient
         colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
         locations={[0.0428, 0.9352]}
@@ -143,6 +146,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  text: {
+    fontFamily: "poppins_semibold",
+    fontSize: getFontSize(0.03)
   },
   right_tab: {
     borderWidth: 1,

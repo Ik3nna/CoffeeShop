@@ -14,7 +14,8 @@ export type IconProps = {
 // TopTab type
 export type TopTabProps = {
     style?: any,
-    item?: any
+    item?: any,
+    text?: string
 }
 
 // CoffeeCard type 

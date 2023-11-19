@@ -44,7 +44,7 @@ const Favourites = () => {
             />
           </View>
         : <View>
-            <TopTabs />
+            <TopTabs text='Favourites' />
 
             <FlatList 
               data={itemsList}
