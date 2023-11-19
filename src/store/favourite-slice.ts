@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FavouriteListProps } from "../types";
 
 
@@ -10,13 +10,13 @@ const favouriteSlice = createSlice({
         itemsList: initialFavouriteState,
     },
     reducers: {
-       addToFavourites (state, action) {
-            const item: FavouriteListProps = action.payload;
+       addToFavourites (state, action: PayloadAction<FavouriteListProps>) {
+            const item = action.payload;
 
             state.itemsList.push(item);
        },
-       removeFromFavourites (state, action) {
-            const data = action.payload.id;
+       removeFromFavourites (state, action: PayloadAction<string>) {
+            const data = action.payload;
 
             state.itemsList = state.itemsList.filter((item: FavouriteListProps)=>item.id !== data);
        }

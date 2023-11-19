@@ -6,10 +6,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners';
 import { CART_ITEM, PAYMENT } from '../../constants/routeName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../icons';
-import { TopTabProps } from '../../types';
+import { FavouriteListProps, TopTabProps } from '../../types';
 import { favouriteActions } from '../../store/favourite-slice';
+import { RootState } from '../../store';
 
 const { width, height } = Dimensions.get("window");
 
@@ -32,9 +33,12 @@ const TopTabs = ({ style, item }: TopTabProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const [darkMode, setDarkMode] = React.useState<boolean>();
-  const [toggleHeart, setToggleHeart] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const itemsList = useSelector((state: RootState)=> state.favourite.itemsList);
+  const [toggleHeart, setToggleHeart] = useState(
+    itemsList.some((data: FavouriteListProps)=>data.id === item?.id) ? true : false
+  );
 
   const data = {
     id: item?.id,
@@ -58,12 +62,10 @@ const TopTabs = ({ style, item }: TopTabProps) => {
   const handleFavourites = ()=> {
     setToggleHeart((prev)=>!prev);
 
-    if (data) {
-      if (toggleHeart === true) {
-        dispatch(favouriteActions.addToFavourites(data));
-      } else {
-        dispatch(favouriteActions.removeFromFavourites(data.id));
-      }
+    if (toggleHeart) {
+      dispatch(favouriteActions.removeFromFavourites(data.id))
+    } else {
+      dispatch(favouriteActions.addToFavourites(data));
     }
   }
 

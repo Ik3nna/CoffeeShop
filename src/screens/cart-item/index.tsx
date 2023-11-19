@@ -14,6 +14,7 @@ import milk from "../../assets/icons/milk.png";
 import Icon from '../../components/icons';
 import { StatusBar } from 'expo-status-bar';
 import Button from '../../components/button';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get("window");
 
@@ -48,7 +49,9 @@ const CartItem = () => {
     <View style={styles.container}>
       <StatusBar style={"light"} />
       <ImageBackground source={item.imagelink_portrait} style={styles.imgBackground}>
-        <TopTabs style={styles.tab} item={item} />
+        <SafeAreaView>
+          <TopTabs item={item} />
+        </SafeAreaView>
 
         <View style={[styles.flash_card, { backgroundColor: theme.primaryRGBA }]}>
           <View style={styles.details}>
@@ -178,9 +181,6 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: Platform.OS === "ios" ? 20 / 24 : 23 /24,
     position: "relative"
-  },
-  tab: {
-    marginTop: Platform.OS === "ios" ? "11%" : "6%"
   },
   flash_card: {
     position: "absolute",

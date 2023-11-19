@@ -7,17 +7,11 @@ import { RootState } from '../../store'
 
 const Favourites = () => {
   const theme = useThemeContext();
-  const itemsList: any = useSelector((state: RootState)=>state.favourite)
-
-  
+  const itemsList = useSelector((state: RootState)=>state.favourite.itemsList)  
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
-      {itemsList?.map((item: any)=> (
-        <Text style={{ color: theme.textHex }}>
-          {item.name}
-        </Text>
-      ))}
+      
     </SafeAreaView>
   )
 }
