@@ -41,7 +41,7 @@ const Home = () => {
     tabsArray.unshift("All");
 
     return tabsArray;
-  }, [])
+  }, []);
 
   const getTabColors = useCallback((selected: string)=> {
     if (selectedTab === selected) {
@@ -49,7 +49,7 @@ const Home = () => {
     } else {
       return theme.inactiveTabHex;
     }
-  },[selectedTab, theme])
+  },[selectedTab, theme]);
 
   useEffect(()=>{
     if (selectedTab !== "All") {
@@ -60,7 +60,7 @@ const Home = () => {
     } else {
       setFilteredList(CoffeeData)
     }
-  }, [selectedTab])
+  }, [selectedTab]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>

@@ -1,5 +1,9 @@
 import { Dimensions, Image, ImageBackground, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
+import Icon from '../../components/icons';
+import { StatusBar } from 'expo-status-bar';
+import Button from '../../components/button';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemeContext } from "../../themes/themeContext"
 import { useRoute } from '@react-navigation/native';
 import TopTabs from '../../components/topTabs';
@@ -11,10 +15,6 @@ import bean from "../../assets/icons/bean.png";
 import africa from "../../assets/icons/location.png";
 import coffee from "../../assets/icons/coffee.png";
 import milk from "../../assets/icons/milk.png";
-import Icon from '../../components/icons';
-import { StatusBar } from 'expo-status-bar';
-import Button from '../../components/button';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get("window");
 
