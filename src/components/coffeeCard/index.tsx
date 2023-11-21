@@ -2,15 +2,43 @@ import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useThemeContext } from '../../themes/themeContext'
-import { CoffeeCardProps } from '../../types'
+import { CartListProps, CoffeeCardProps } from '../../types'
 import { getFontSize } from '../../utils/getFontSize'
 import Button from '../button'
 import Icon from '../icons'
+import { useDispatch } from 'react-redux'
+import { cartActions } from '../../store/cart-slice'
+import Toast from 'react-native-root-toast'
 
 const { width, height } = Dimensions.get("window");
 
-const CoffeeCard = React.memo(({ name, image, rating, ingredient, currency, price }: CoffeeCardProps) => {
+const CoffeeCard = React.memo(({ id, name, image, rating, ingredient, currency, price, size, roasted }: CoffeeCardProps) => {
   const theme = useThemeContext();
+  const dispatch = useDispatch();
+  const addedItem = {
+    id,
+    name, 
+    image, 
+    ingredient,  
+    roasted,
+    innerArr: [{ id: id, size: size, price: price, quantity: 1, currency: currency }]
+  }
+
+  const handleCart = (data: CartListProps)=> {
+    dispatch(cartActions.addToCart(data));
+
+    Toast.show("Added to cart!!", {
+        duration: 2000,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        backgroundColor: theme.textHex,
+        textColor: theme.backgroundHex,
+        opacity: 0.9,
+        textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
+    });
+  }
 
   return (
     <LinearGradient
@@ -49,7 +77,7 @@ const CoffeeCard = React.memo(({ name, image, rating, ingredient, currency, pric
                     height={width * 0.1}
                     radius={10}
                     size={getFontSize(0.035)}
-                    onClick={()=>console.log(12)}
+                    onClick={()=>handleCart(addedItem)}
                 />
             </View>
        </View>

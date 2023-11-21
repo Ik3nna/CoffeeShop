@@ -8,18 +8,18 @@ import LottieView from 'lottie-react-native';
 import FlashCard from '../../components/flashCard';
 import { getFontSize } from '../../utils/getFontSize';
 import Icon from '../../components/icons';
+import TopTabs from '../../components/topTabs';
+import Toast from 'react-native-root-toast';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { favouriteActions } from '../../store/favourite-slice'
 
 // assets
 import coffeecup from "../../lottie/coffeecup.json";
-import TopTabs from '../../components/topTabs';
 import bean from "../../assets/icons/bean.png";
 import africa from "../../assets/icons/location.png";
 import coffee from "../../assets/icons/coffee.png";
 import milk from "../../assets/icons/milk.png";
-import Toast from 'react-native-root-toast';
 
 
 const { width, height } = Dimensions.get("window");
@@ -50,6 +50,8 @@ const Favourites = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
+      <TopTabs text='Favourites' />
+
       {
         itemsList.length === 0 
         ? <View style={styles.lottie_container}>
@@ -60,102 +62,98 @@ const Favourites = () => {
               style={styles.lottie_view}
             />
           </View>
-        : <View>
-            <TopTabs text='Favourites' />
+        : <FlatList 
+            data={itemsList}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => item.id}
+            ListFooterComponent={<View style={{ height: BottomTabBarHeight * 1.6 }} />}
+            renderItem={({item})=> (
+              <View style={styles.list_container}>
+                <ImageBackground source={item.image} imageStyle={styles.img_style} style={styles.imgBackground}>
+                  <LinearGradient
+                    colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
+                    locations={[0.0428, 0.9352]}
+                    style={[styles.heart_container, { borderColor: theme.secondarySubBgHex }]}
+                  >
+                    <TouchableOpacity onPress={()=>handleFavouritesList(item.id)}>
+                      <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
+                    </TouchableOpacity>
+                  </LinearGradient>
 
-            <FlatList 
-              data={itemsList}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              ListFooterComponent={<View style={{ height: BottomTabBarHeight * 1.6 }} />}
-              renderItem={({item})=> (
-                <View style={styles.list_container}>
-                  <ImageBackground source={item.image} imageStyle={styles.img_style} style={styles.imgBackground}>
-                    <LinearGradient
-                      colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
-                      locations={[0.0428, 0.9352]}
-                      style={[styles.heart_container, { borderColor: theme.secondarySubBgHex }]}
-                    >
-                      <TouchableOpacity onPress={()=>handleFavouritesList(item.id)}>
-                        <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
-                      </TouchableOpacity>
-                    </LinearGradient>
-
-                    <View style={[styles.flash_card, { backgroundColor: theme.primaryRGBA }]}>
-                      <View style={styles.details}>
-                        <View>
-                          <Text style={[styles.name, { color: theme.textHex }]}>{item.name}</Text>
-                          <Text style={[styles.ingredient, { color: theme.textHex }]}>{item.special_ingredient}</Text>
-                        </View>
-                        
-                        <View style={styles.card_container}>
-                          <FlashCard 
-                            w={width * 0.13}
-                            h={width * 0.13}
-                            icon={
-                              item.id.toLowerCase().includes('c') 
-                              ? <Image source={coffee} alt="coffee" style={styles.img} />
-                              : <Image source={bean} alt="bean" style={styles.img} />
-                            }
-                            content={item.type}
-                            bgColor={theme.subBgHex}
-                            color={theme.subTextHex}
-                            borderRadius={10}
-                            size={getFontSize(0.016)}
-                            font={"poppins_medium"}
-                          />
-
-                          <FlashCard 
-                            w={width * 0.13}
-                            h={width * 0.13}
-                            icon={
-                              item.id.includes('C') 
-                              ? <Image source={milk} alt="milk" style={styles.img} />
-                              : <Image source={africa} alt="africa" style={styles.img} />
-                            }
-                            content={item.ingredients}
-                            bgColor={theme.subBgHex}
-                            color={theme.subTextHex}
-                            borderRadius={10}
-                            size={getFontSize(0.016)}
-                            font={"poppins_medium"}
-                          />
-                        </View>
+                  <View style={[styles.flash_card, { backgroundColor: theme.primaryRGBA }]}>
+                    <View style={styles.details}>
+                      <View>
+                        <Text style={[styles.name, { color: theme.textHex }]}>{item.name}</Text>
+                        <Text style={[styles.ingredient, { color: theme.textHex }]}>{item.special_ingredient}</Text>
                       </View>
-                      
-                      <View style={styles.sub_details}>
-                        <View style={styles.ratings}>
-                          <Icon type="ant" name="star" size={25} color={theme.activeHex} />
-                          <Text style={[styles.score, { color: theme.textHex }]}>{item.rating}</Text>
-                          <Text style={[styles.ingredient, { color: theme.subTextHex }]}>({item.count})</Text>
-                        </View>
-
+                        
+                      <View style={styles.card_container}>
                         <FlashCard 
-                          w={width * 0.32}
-                          h={width * 0.1}
-                          borderRadius={10}
-                          content={item.roasted}
+                          w={width * 0.13}
+                          h={width * 0.13}
+                          icon={
+                            item.id.toLowerCase().includes('c') 
+                            ? <Image source={coffee} alt="coffee" style={styles.img} />
+                            : <Image source={bean} alt="bean" style={styles.img} />
+                          }
+                          content={item.type}
                           bgColor={theme.subBgHex}
                           color={theme.subTextHex}
+                          borderRadius={10}
+                          size={getFontSize(0.016)}
+                          font={"poppins_medium"}
+                        />
+
+                        <FlashCard 
+                          w={width * 0.13}
+                           h={width * 0.13}
+                          icon={
+                            item.id.includes('C') 
+                            ? <Image source={milk} alt="milk" style={styles.img} />
+                            : <Image source={africa} alt="africa" style={styles.img} />
+                          }
+                          content={item.ingredients}
+                          bgColor={theme.subBgHex}
+                          color={theme.subTextHex}
+                          borderRadius={10}
                           size={getFontSize(0.016)}
                           font={"poppins_medium"}
                         />
                       </View>
                     </View>
-                  </ImageBackground>
+                      
+                    <View style={styles.sub_details}>
+                      <View style={styles.ratings}>
+                        <Icon type="ant" name="star" size={25} color={theme.activeHex} />
+                        <Text style={[styles.score, { color: theme.textHex }]}>{item.rating}</Text>
+                        <Text style={[styles.ingredient, { color: theme.subTextHex }]}>({item.count})</Text>
+                      </View>
 
-                  <LinearGradient 
-                    colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
-                    locations={[0.0807, 0.9193]}
-                    style={styles.sub_content}
-                  >
-                    <Text style={[styles.description, { color: theme.subTextHex }]}>Description</Text>
-                    <Text style={[styles.des_content, { color: theme.textHex }]}>{item.description}</Text>
-                  </LinearGradient>
-                </View>
-              )}
-            />
-          </View>
+                      <FlashCard 
+                        w={width * 0.32}
+                        h={width * 0.1}
+                        borderRadius={10}
+                        content={item.roasted}
+                        bgColor={theme.subBgHex}
+                        color={theme.subTextHex}
+                        size={getFontSize(0.016)}
+                        font={"poppins_medium"}
+                      />
+                    </View>
+                    </View>
+                </ImageBackground>
+
+                <LinearGradient 
+                  colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
+                  locations={[0.0807, 0.9193]}
+                  style={styles.sub_content}
+                >
+                  <Text style={[styles.description, { color: theme.subTextHex }]}>Description</Text>
+                  <Text style={[styles.des_content, { color: theme.textHex }]}>{item.description}</Text>
+                </LinearGradient>
+              </View>
+            )}
+          />
         }
     </SafeAreaView>
   )

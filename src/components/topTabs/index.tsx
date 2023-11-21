@@ -70,7 +70,7 @@ const TopTabs = ({ style, item, text }: TopTabProps) => {
       dispatch(favouriteActions.addToFavourites(data));
     }
 
-    Toast.show(!toggleHeart ? "Added to favourites successfully!!" : "Removed from favourites!!", {
+    Toast.show(!toggleHeart ? "Added to favourites!!" : "Removed from favourites!!", {
       duration: 2000,
       position: Toast.positions.BOTTOM,
       shadow: true,

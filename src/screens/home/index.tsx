@@ -109,11 +109,15 @@ const Home = () => {
                 <TouchableOpacity key={item.id} style={styles.tab_btn} onPress={()=>navigation.push(CART_ITEM, { item: item })}>
                   <CoffeeCard 
                     name={item.name}
+                    id={item.id}
                     image={item.imagelink_square}
                     rating={item.average_rating}
                     ingredient={item.special_ingredient}
                     currency={item.prices[2].currency}
+                    priceArr={item.prices}
                     price={item.prices[2].price}
+                    size={item.prices[2].size}
+                    roasted={item.roasted}
                   />
                 </TouchableOpacity>
               ))}
@@ -135,11 +139,15 @@ const Home = () => {
             <TouchableOpacity key={item.id} style={styles.tab_btn} onPress={()=>navigation.push(CART_ITEM, { item: item })}>
               <CoffeeCard 
                 name={item.name}
+                id={item.id}
                 image={item.imagelink_square}
                 rating={item.average_rating}
                 ingredient={item.special_ingredient}
                 currency={item.prices[2].currency}
+                priceArr={item.prices}
                 price={item.prices[2].price}
+                size={item.prices[2].size}
+                roasted={item.roasted}
               />
             </TouchableOpacity>
           ))}

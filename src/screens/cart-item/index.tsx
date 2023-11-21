@@ -4,7 +4,7 @@ import Icon from '../../components/icons';
 import { StatusBar } from 'expo-status-bar';
 import Button from '../../components/button';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useThemeContext } from "../../themes/themeContext"
+import { useThemeContext } from "../../themes/themeContext";
 import { useRoute } from '@react-navigation/native';
 import TopTabs from '../../components/topTabs';
 import { getFontSize } from '../../utils/getFontSize';

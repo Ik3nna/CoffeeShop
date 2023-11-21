@@ -20,12 +20,16 @@ export type TopTabProps = {
 
 // CoffeeCard type 
 export type CoffeeCardProps = {
+    id: string,
     image: any,
     name: string,
     rating?: number,
     ingredient: string,
     currency: string,
-    price: string
+    price: string,
+    priceArr?: any,
+    size: string,
+    roasted: string
 }
 
 // Button type
@@ -72,4 +76,14 @@ export type FavouriteListProps = {
 export type ToastProps = {
     message: string,
     dependency: any
+}
+
+// CartList type
+export type CartListProps = {
+    id: string,
+    image: any,
+    name: string,
+    ingredient: string,
+    roasted: string,
+    innerArr: any
 }
