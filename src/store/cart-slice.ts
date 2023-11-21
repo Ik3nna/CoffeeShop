@@ -29,8 +29,13 @@ const cartSlice = createSlice({
        },
        addToCart (state, action: PayloadAction<CartListProps>) {
             const item = action.payload;
-
-            state.cartList.push(item);
+            const existingItem = state.cartList.find((data)=> data.id === item.id);
+            
+            if (existingItem) {
+                existingItem.innerArr[0].quantity += 1;
+            } else {
+                state.cartList.push(item);
+            }
        }
     }
 })
