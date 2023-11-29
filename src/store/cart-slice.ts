@@ -10,21 +10,38 @@ const cartSlice = createSlice({
         totalPrice: 0
     },
     reducers: {
-       increment (state, action: PayloadAction<string>) {
-            const item = state.cartList.find((item)=>item.id === action.payload);
-
-            if (item) {
-                item.innerArr[0].quantity += 1;
+       increment (state, action) {
+            const data = action.payload
+            const item = state.cartList.find((item)=>item.id === data.id);
+            const existingItem = item?.innerArr.find((item: any)=>item.size === data.size);
+        
+            if (existingItem) {
+                existingItem.quantity += 1;
             }
        },
        decrement (state, action) {
-            const item = state.cartList.find((item)=>item.id === action.payload);
+            const data = action.payload
+            const item = state.cartList.find((item)=>item.id === data.id);
+            const existingItem = item?.innerArr.find((item: any)=>item.size === data.size);
 
-            if (item && item.innerArr[0].quantity > 0) {
-                item.innerArr[0].quantity -= 1;
-            } 
-            if (item && item.innerArr[0].quantity === 0) {
-                state.cartList = state.cartList.filter((item)=>item.id !== action.payload)
+            if (existingItem) {
+                if (existingItem.quantity > 0) {
+                  existingItem.quantity -= 1;
+                } 
+                if (existingItem.quantity === 0) {
+                  const newArr = item?.innerArr.filter((item: any) => item.size !== existingItem.size);
+            
+                  if (!newArr.length) {
+                    state.cartList = state.cartList.filter((data) => data.id !== item?.id);
+                  } else {
+                    state.cartList = state.cartList.map((data) => {
+                      if (data.id === item?.id) {
+                        data.innerArr = newArr;
+                      }
+                      return data;
+                    });
+                  }
+                }
             }
        },
        addToCart (state, action: PayloadAction<CartListProps>) {
@@ -32,7 +49,13 @@ const cartSlice = createSlice({
             const existingItem = state.cartList.find((data)=> data.id === item.id);
             
             if (existingItem) {
-                existingItem.innerArr[0].quantity += 1;
+                const existingSize = existingItem.innerArr.find((data: any)=>data.size === item.innerArr[0].size);
+
+                if (existingSize) {
+                    existingItem.innerArr[0].quantity += 1;
+                } else {
+                    existingItem.innerArr.push(item.innerArr[0]);
+                }
             } else {
                 state.cartList.push(item);
             }

@@ -1,5 +1,5 @@
 import { Dimensions, Image, ImageBackground, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Icon from '../../components/icons';
 import { StatusBar } from 'expo-status-bar';
 import Button from '../../components/button';
@@ -9,24 +9,32 @@ import { useRoute } from '@react-navigation/native';
 import TopTabs from '../../components/topTabs';
 import { getFontSize } from '../../utils/getFontSize';
 import FlashCard from '../../components/flashCard';
+import { CartListProps, NavigationProps } from '../../types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { cartActions } from '../../store/cart-slice';
+import Toast from 'react-native-root-toast'
 
 // assets
 import bean from "../../assets/icons/bean.png";
 import africa from "../../assets/icons/location.png";
 import coffee from "../../assets/icons/coffee.png";
 import milk from "../../assets/icons/milk.png";
+import { CART } from '../../constants/routeName';
 
 const { width, height } = Dimensions.get("window");
 
-const CartItem = () => {
+const CartItem = ({ navigation }: NavigationProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const { item }: any = route.params;
-  const [index, setIndex] = useState(2)
-  const [selectedTab, setSelectedTab] = useState(item.prices[index].size);
+  const [index, setIndex] = useState(2);
+  const [selectedTab, setSelectedTab] = useState(item.prices[index].size); 
+  const dispatch = useDispatch();
+  const cartList = useSelector((state: RootState)=>state.cart.cartList);
 
-  const handleTabSelect = (data: string)=> {
-    setSelectedTab(data);
+  const handleTabSelect = useCallback((data: string)=> {
+    setSelectedTab(data)
 
     if (data === "M" || data === "500gm") {
       setIndex(1)
@@ -35,7 +43,7 @@ const CartItem = () => {
     } else {
       setIndex(2)
     }
-  }
+  }, [selectedTab, index])
 
   const getColor = (data: string)=> {
     if (selectedTab === data) {
@@ -43,6 +51,33 @@ const CartItem = () => {
     } else {
       return theme.subTextHex
     }
+  }
+
+  const addedItem = {
+    id: item.id,
+    name: item.name,
+    image: item.imagelink_square,
+    ingredient: item.special_ingredient,
+    roasted: item.roasted,
+    innerArr: [{ id: item.id, size: selectedTab, price: item.prices[index].price, quantity: 1, currency: "$" }]
+  }
+
+  const handleCart = (data: CartListProps)=> {
+    dispatch(cartActions.addToCart(data));
+
+    Toast.show("Added to cart!!", {
+      duration: 2000,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      backgroundColor: theme.textHex,
+      textColor: theme.backgroundHex,
+      opacity: 0.9,
+      textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
+    });
+
+    navigation.navigate(CART);
   }
 
   return (
@@ -163,7 +198,7 @@ const CartItem = () => {
           height={width * 0.13}
           radius={15}
           size={getFontSize(0.021)}
-          onClick={()=>console.log("Added to cart")}
+          onClick={()=>handleCart(addedItem)}
         />
       </View>
     </View>

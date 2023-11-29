@@ -15,6 +15,7 @@ import { getFontSize } from '../../utils/getFontSize';
 import FlashCard from '../../components/flashCard';
 import Button from '../../components/button';
 import { cartActions } from '../../store/cart-slice';
+import Toast from 'react-native-root-toast';
 
 
 const { width, height } = Dimensions.get("window");
@@ -68,7 +69,7 @@ const Cart = () => {
                       font={"poppins_medium"}
                       size={getFontSize(0.027)}
                       bgColor={theme.sizeHex}
-                      w={width * 0.19}
+                      w={width * 0.21}
                       h={width * 0.1}
                       borderRadius={10}
                     />
@@ -87,7 +88,23 @@ const Cart = () => {
                         height={width * 0.1}
                         radius={10}
                         size={getFontSize(0.035)}
-                        onClick={()=>dispatch(cartActions.decrement(item.id))}
+                        onClick={()=>{
+                          dispatch(cartActions.decrement(item));
+
+                          if (item.quantity === 1) {
+                            Toast.show("Removed from cart!!", {
+                              duration: 2000,
+                              position: Toast.positions.BOTTOM,
+                              shadow: true,
+                              animation: true,
+                              hideOnPress: true,
+                              backgroundColor: theme.textHex,
+                              textColor: theme.backgroundHex,
+                              opacity: 0.9,
+                              textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
+                            });
+                          }
+                        }}
                       />
 
                       <FlashCard 
@@ -110,7 +127,7 @@ const Cart = () => {
                         height={width * 0.1}
                         radius={10}
                         size={getFontSize(0.035)}
-                        onClick={()=>dispatch(cartActions.increment(item.id))}
+                        onClick={()=>dispatch(cartActions.increment(item))}
                       />
                     </View>
                   </View>
