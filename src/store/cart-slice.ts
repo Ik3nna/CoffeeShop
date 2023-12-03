@@ -18,6 +18,18 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.quantity += 1;
       }
+
+      state.totalPrice = parseFloat(
+        state.cartList.reduce((total, cartItem) => {
+          return (
+            total +
+            cartItem.innerArr.reduce((itemTotal: number, innerItem: any) => {
+              const itemPrice = parseFloat(innerItem.price);
+              return itemTotal + innerItem.quantity * itemPrice;
+            }, 0)
+          );
+        }, 0).toFixed(2)
+      );
     },
     decrement (state, action) {
       const data = action.payload
@@ -43,6 +55,18 @@ const cartSlice = createSlice({
           }
         }
       }
+
+      state.totalPrice = parseFloat(
+        state.cartList.reduce((total, cartItem) => {
+          return (
+            total +
+            cartItem.innerArr.reduce((itemTotal: number, innerItem: any) => {
+              const itemPrice = parseFloat(innerItem.price);
+              return itemTotal + innerItem.quantity * itemPrice;
+            }, 0)
+          );
+        }, 0).toFixed(2)
+      );
     },
     addToCart (state, action: PayloadAction<CartListProps>) {
       const item = action.payload;
@@ -61,6 +85,18 @@ const cartSlice = createSlice({
       } else {
         state.cartList.push(item);
       }
+
+      state.totalPrice = parseFloat(
+        state.cartList.reduce((total, cartItem) => {
+          return (
+            total +
+            cartItem.innerArr.reduce((itemTotal: number, innerItem: any) => {
+              const itemPrice = parseFloat(innerItem.price);
+              return itemTotal + innerItem.quantity * itemPrice;
+            }, 0)
+          );
+        }, 0).toFixed(2)
+      );
     }
   }
 })

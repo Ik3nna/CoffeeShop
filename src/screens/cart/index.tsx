@@ -1,5 +1,5 @@
 import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemeContext } from "../../themes/themeContext";
 import TopTabs from '../../components/topTabs';
@@ -26,6 +26,22 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartList = useSelector((state: RootState)=>state.cart.cartList);
   const totalPrice = useSelector((state: RootState)=>state.cart.totalPrice);
+
+  const formattedTotalPrice = ()=> {
+    const splittedPrice = totalPrice.toString().split(".");
+
+    let formattedTotalPrice: string;
+
+    if (splittedPrice.length === 1) {
+      formattedTotalPrice = `${totalPrice}.00`;
+    } else if (splittedPrice[1].length === 1) {
+      formattedTotalPrice = `${totalPrice}0`
+    } else {
+      formattedTotalPrice = totalPrice
+    }
+
+    return formattedTotalPrice
+  }
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
@@ -144,7 +160,7 @@ const Cart = () => {
             
             <View style={styles.currency_container}>
               <Text style={[styles.currency, { color: theme.activeHex }]}>$</Text>
-              <Text style={[styles.currency, { color: theme.textHex }]}>{totalPrice}</Text>
+              <Text style={[styles.currency, { color: theme.textHex }]}>{formattedTotalPrice()}</Text>
             </View>
           </View>
             
