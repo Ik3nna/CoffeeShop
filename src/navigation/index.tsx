@@ -12,12 +12,18 @@ import OrderHistory from '../screens/order-history';
 import { useThemeContext } from "../themes/themeContext"
 import Icon from '../components/icons';
 import { BlurView } from 'expo-blur';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomTabNavigator () {
+function BottomTabNavigator ({ route }: { route: any}) {
   const theme = useThemeContext();
+  const cartList = useSelector((state: RootState)=>state.cart.cartList);
+
+  const focusedRoute = getFocusedRouteNameFromRoute(route)
 
   return (
     <Tab.Navigator
@@ -44,8 +50,11 @@ function BottomTabNavigator () {
               size = focused ? 27 : 25;
             }
             return(
-              <View>
+              <View style={styles.icon_container}>
                 <Icon type={type} name={iconName} size={size} color={color} />
+                {route.name === CART && cartList.length > 0 && (
+                  <View style={[styles.cart_presence, { backgroundColor: focusedRoute === CART ? theme.inactiveIconsHex : theme.activeHex }]} />
+                )}
               </View>
             )
         },
@@ -93,6 +102,17 @@ export function MainNavigator () {
 }
 
 const styles = StyleSheet.create({
+  icon_container: {
+    position: "relative"
+  },
+  cart_presence: {
+    width: 10, 
+    height: 10, 
+    borderRadius: 5,
+    position: "absolute", 
+    top: -3,
+    right: 0 
+  },
   blur: {
     position: "absolute",
     top: 0,

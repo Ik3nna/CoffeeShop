@@ -41,8 +41,6 @@ const CoffeeCard = React.memo(({ id, name, image, rating, ingredient, currency, 
         opacity: 0.9,
         textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
     });
-
-    navigation.navigate(CART);
   }
 
   return (

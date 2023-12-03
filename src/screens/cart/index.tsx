@@ -7,9 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import LottieView from 'lottie-react-native';
-
-// assets
-import coffeecup from "../../lottie/coffeecup.json";
 import DisplayCard from '../../components/displayCard';
 import { getFontSize } from '../../utils/getFontSize';
 import FlashCard from '../../components/flashCard';
@@ -17,6 +14,8 @@ import Button from '../../components/button';
 import { cartActions } from '../../store/cart-slice';
 import Toast from 'react-native-root-toast';
 
+// assets
+import coffeecup from "../../lottie/coffeecup.json";
 
 const { width, height } = Dimensions.get("window");
 
@@ -26,6 +25,7 @@ const Cart = () => {
   const BottomTabBarHeight = useBottomTabBarHeight();
   const dispatch = useDispatch();
   const cartList = useSelector((state: RootState)=>state.cart.cartList);
+  const totalPrice = useSelector((state: RootState)=>state.cart.totalPrice);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
@@ -46,7 +46,7 @@ const Cart = () => {
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id}
             style={styles.flat_list}
-            ListFooterComponent={<View style={{ height: BottomTabBarHeight * 1.6 }} />}
+            ListFooterComponent={<View style={{ height: BottomTabBarHeight * 2 }} />}
             renderItem={({item})=> (
               <DisplayCard style={styles.list}>
                 <View style={styles.wrapper}>
@@ -136,6 +136,30 @@ const Cart = () => {
             )}
           />
       }
+
+      {cartList.length > 0 && (
+        <DisplayCard style={[styles.cart_container, { bottom: BottomTabBarHeight }]}>
+          <View style={styles.sub_cart_container}>
+            <Text style={[styles.price, { color: theme.subTextHex }]}>Total Price</Text>
+            
+            <View style={styles.currency_container}>
+              <Text style={[styles.currency, { color: theme.activeHex }]}>$</Text>
+              <Text style={[styles.currency, { color: theme.textHex }]}>{totalPrice}</Text>
+            </View>
+          </View>
+            
+          <Button
+            content='Pay'
+            bgColor={theme.activeHex}
+            color={theme.textHex}
+            width={width * 0.63}
+            height={width * 0.13}
+            radius={15}
+            size={getFontSize(0.021)}
+            // onClick={()=>handleCart(addedItem)}
+          />
+        </DisplayCard>
+      )}
     </SafeAreaView>
   )
 }
@@ -144,7 +168,8 @@ export default Cart
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: height,
+    position: "relative",
     paddingHorizontal: "4%"
   },
   lottie_container: {
@@ -173,7 +198,6 @@ const styles = StyleSheet.create({
     width: width * 0.25,
     height: width * 0.25,
     borderRadius: 23,
-    
   },
   name: {
     fontFamily: "poppins_regular",
@@ -207,5 +231,30 @@ const styles = StyleSheet.create({
   btns_container: {
     flexDirection: "row",
     columnGap: 10
+  },
+  cart_container: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: "4%",
+    paddingVertical: "4%",
+    position: "absolute",
+    width: "100%",
+  }, 
+  sub_cart_container: {
+    alignItems: "center"
+  },
+  price: {
+    fontSize: getFontSize(0.018),
+  },
+  currency_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 5
+  },
+  currency: {
+    fontFamily: "poppins_semibold",
+    fontSize: getFontSize(0.027)
   }
 })

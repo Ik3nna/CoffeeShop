@@ -20,7 +20,7 @@ import bean from "../../assets/icons/bean.png";
 import africa from "../../assets/icons/location.png";
 import coffee from "../../assets/icons/coffee.png";
 import milk from "../../assets/icons/milk.png";
-import { CART } from '../../constants/routeName';
+import { CART, HOME } from '../../constants/routeName';
 
 const { width, height } = Dimensions.get("window");
 
@@ -31,8 +31,7 @@ const CartItem = ({ navigation }: NavigationProps) => {
   const [index, setIndex] = useState(2);
   const [selectedTab, setSelectedTab] = useState(item.prices[index].size); 
   const dispatch = useDispatch();
-  const cartList = useSelector((state: RootState)=>state.cart.cartList);
-
+  
   const handleTabSelect = useCallback((data: string)=> {
     setSelectedTab(data)
 
@@ -76,8 +75,6 @@ const CartItem = ({ navigation }: NavigationProps) => {
       opacity: 0.9,
       textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
     });
-
-    navigation.navigate(CART);
   }
 
   return (
