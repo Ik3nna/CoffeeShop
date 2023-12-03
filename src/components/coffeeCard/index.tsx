@@ -9,15 +9,12 @@ import Icon from '../icons'
 import { useDispatch } from 'react-redux'
 import { cartActions } from '../../store/cart-slice'
 import Toast from 'react-native-root-toast'
-import { useNavigation } from '@react-navigation/native'
-import { CART } from '../../constants/routeName'
 
 const { width, height } = Dimensions.get("window");
 
 const CoffeeCard = React.memo(({ id, name, image, rating, ingredient, currency, price, size, roasted }: CoffeeCardProps) => {
   const theme = useThemeContext();
   const dispatch = useDispatch();
-  const navigation = useNavigation<any>();
   const addedItem = {
     id,
     name, 

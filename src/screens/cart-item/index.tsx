@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import Button from '../../components/button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemeContext } from "../../themes/themeContext";
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import TopTabs from '../../components/topTabs';
 import { getFontSize } from '../../utils/getFontSize';
 import FlashCard from '../../components/flashCard';
@@ -76,6 +76,12 @@ const CartItem = ({ navigation }: NavigationProps) => {
       textStyle: { fontFamily: "poppins_semibold", fontSize: getFontSize(0.02)},
     });
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      return setIndex(2);
+    }, [navigation])
+  );
 
   return (
     <View style={styles.container}>

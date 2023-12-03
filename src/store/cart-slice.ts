@@ -49,10 +49,12 @@ const cartSlice = createSlice({
       const existingItem = state.cartList.find((data)=> data.id === item.id);
             
       if (existingItem) {
-        const existingSize = existingItem.innerArr.find((data: any)=>data.size === item.innerArr[0].size);
+        const existingSizeIndex = existingItem.innerArr.findIndex(
+          (data: any) => data.size === item.innerArr[0].size
+        );
 
-        if (existingSize) {
-          existingItem.innerArr[0].quantity += 1;
+        if (existingSizeIndex !== -1) {
+          existingItem.innerArr[existingSizeIndex].quantity += 1;
         } else {
           existingItem.innerArr.push(item.innerArr[0]);
         }
