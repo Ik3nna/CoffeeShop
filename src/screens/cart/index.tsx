@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, FlatList, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemeContext } from "../../themes/themeContext";
@@ -16,6 +16,7 @@ import Toast from 'react-native-root-toast';
 
 // assets
 import coffeecup from "../../lottie/coffeecup.json";
+import { BlurView } from 'expo-blur';
 
 const { width, height } = Dimensions.get("window");
 
@@ -155,25 +156,27 @@ const Cart = () => {
 
       {cartList.length > 0 && (
         <DisplayCard style={[styles.cart_container, { bottom: BottomTabBarHeight }]}>
-          <View style={styles.sub_cart_container}>
-            <Text style={[styles.price, { color: theme.subTextHex }]}>Total Price</Text>
-            
-            <View style={styles.currency_container}>
-              <Text style={[styles.currency, { color: theme.activeHex }]}>$</Text>
-              <Text style={[styles.currency, { color: theme.textHex }]}>{formattedTotalPrice()}</Text>
+          <BlurView style={styles.cart_container} intensity={15} blurReductionFactor={100}>
+            <View style={styles.sub_cart_container}>
+              <Text style={[styles.price, { color: theme.subTextHex }]}>Total Price</Text>
+              
+              <View style={styles.currency_container}>
+                <Text style={[styles.currency, { color: theme.activeHex }]}>$</Text>
+                <Text style={[styles.currency, { color: theme.textHex }]}>{formattedTotalPrice()}</Text>
+              </View>
             </View>
-          </View>
-            
-          <Button
-            content='Pay'
-            bgColor={theme.activeHex}
-            color={theme.textHex}
-            width={width * 0.63}
-            height={width * 0.13}
-            radius={15}
-            size={getFontSize(0.021)}
-            // onClick={()=>handleCart(addedItem)}
-          />
+              
+            <Button
+              content='Pay'
+              bgColor={theme.activeHex}
+              color={theme.textHex}
+              width={width * 0.63}
+              height={width * 0.13}
+              radius={15}
+              size={getFontSize(0.021)}
+              // onClick={()=>handleCart(addedItem)}
+            />
+          </BlurView>
         </DisplayCard>
       )}
     </SafeAreaView>
@@ -254,9 +257,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: "4%",
-    paddingVertical: "4%",
+    paddingVertical: height * 0.05,
     position: "absolute",
-    width: "100%",
+    width: width,
   }, 
   sub_cart_container: {
     alignItems: "center"
