@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Alert } from 'react-native'
+import { Dimensions, StyleSheet, Text, View, Alert, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useThemeContext } from '../../themes/themeContext'
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     btn_container: {
         position: "absolute",
-        bottom: "7%",
+        bottom: Platform.OS === "ios" ? "4.5%" : "2%",
         paddingHorizontal: "4%",
         paddingTop: "4%",
         rowGap: 20

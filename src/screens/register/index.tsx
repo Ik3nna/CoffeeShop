@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, Alert } from 'react-native'
+import { Dimensions, StyleSheet, Platform, View, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useThemeContext } from '../../themes/themeContext'
@@ -7,7 +7,7 @@ import TopTabs from '../../components/topTabs';
 import { FormDataProps, NavigationProps } from '../../types';
 import { useForm, Controller } from "react-hook-form";
 import Button from '../../components/button';
-import { LOGIN, PAYMENT } from '../../constants/routeName';
+import { CART, PAYMENT } from '../../constants/routeName';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../config/firebaseConfig';
 import Input from '../../components/input'
@@ -129,7 +129,7 @@ const Register = ({ navigation }: NavigationProps) => {
                 height={width * 0.13}
                 radius={15}
                 size={getFontSize(0.025)}
-                onClick={()=>navigation.navigate(LOGIN)}
+                onClick={()=>navigation.navigate(CART)}
             />
         </View>
     </SafeAreaView>
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
     btn_container: {
         position: "absolute",
-        bottom: "7%",
+        bottom: Platform.OS === "ios" ? "4.5%" : "2%",
         paddingHorizontal: "4%",
         paddingTop: "4%",
         rowGap: 20
