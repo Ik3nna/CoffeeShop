@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeContext } from '../../themes/themeContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners';
-import { CART_ITEM, LOGIN, PAYMENT } from '../../constants/routeName';
+import { CART_ITEM, LOGIN, PAYMENT, REGISTER } from '../../constants/routeName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../icons';
@@ -100,7 +100,7 @@ const TopTabs = ({ style, item, text, noRightPocket }: TopTabProps) => {
         style={[styles.left_tab, { borderColor: theme.secondarySubBgHex }]}
       >
         {
-          route.name === PAYMENT || route.name === CART_ITEM || route.name === LOGIN
+          route.name === PAYMENT || route.name === CART_ITEM || route.name === LOGIN || route.name === REGISTER
           ? 
             <TouchableOpacity style={styles.btn} onPress={()=>navigation.goBack()}>
               <Icon type="feather" name="chevron-left" size={27} color={theme.arrowHex} />
