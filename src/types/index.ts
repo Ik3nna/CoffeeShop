@@ -15,7 +15,8 @@ export type IconProps = {
 export type TopTabProps = {
     style?: any,
     item?: any,
-    text?: string
+    text?: string,
+    noRightPocket?: boolean
 }
 
 // CoffeeCard type 
@@ -38,7 +39,8 @@ export type ButtonProps = {
     onClick?: ()=> void,
     bgColor: string,
     color: string,
-    width?: number,
+    width?: any,
+    loading?: boolean,
     height?: number,
     radius?: number,
     size?: number
@@ -86,4 +88,22 @@ export type CartListProps = {
     ingredient: string,
     roasted: string,
     innerArr: any
+}
+
+// Text Input type
+export type InputProps = {
+    placeholder: string,
+    value: string | undefined,
+    error: string | undefined,
+    errorWidth?: number
+    onChange: ()=> void,
+    onBlur: ()=> void,
+    [props: string]: any
+}
+
+// Form data type
+export type FormDataProps = {
+    name?: string,
+    email: string,
+    password: string
 }

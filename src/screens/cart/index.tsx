@@ -13,14 +13,19 @@ import FlashCard from '../../components/flashCard';
 import Button from '../../components/button';
 import { cartActions } from '../../store/cart-slice';
 import Toast from 'react-native-root-toast';
+import { BlurView } from 'expo-blur';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../config/firebaseConfig';
+import { NavigationProps } from '../../types';
+import { LOGIN, PAYMENT } from '../../constants/routeName';
+
 
 // assets
 import coffeecup from "../../lottie/coffeecup.json";
-import { BlurView } from 'expo-blur';
 
 const { width, height } = Dimensions.get("window");
 
-const Cart = () => {
+const Cart = ({ navigation }: NavigationProps) => {
   const theme = useThemeContext();
   const animation = useRef(null);
   const BottomTabBarHeight = useBottomTabBarHeight();
@@ -42,6 +47,16 @@ const Cart = () => {
     }
 
     return formattedTotalPrice
+  }
+
+  const checkAuthenticationStatus = async ()=> {
+    onAuthStateChanged(auth, async (user)=> {
+      if (user) {
+        navigation.navigate(PAYMENT)
+      } else {
+        navigation.navigate(LOGIN)
+      }
+    })
   }
 
   return (
@@ -174,7 +189,7 @@ const Cart = () => {
               height={width * 0.13}
               radius={15}
               size={getFontSize(0.021)}
-              // onClick={()=>handleCart(addedItem)}
+              onClick={()=>checkAuthenticationStatus()}
             />
           </BlurView>
         </DisplayCard>

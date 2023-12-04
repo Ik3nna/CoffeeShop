@@ -15,7 +15,8 @@ export const theme = {
         cardHex: '#252a32',
         cardSubHex: 'rgba(38, 43, 51, 0.00)',
         displayCardHex: '#262B33',
-        sizeHex: '#0C0F14'
+        sizeHex: '#0C0F14',
+        danger: "#c70000",
     },
     light: {
         heartHex: '#DC3535',
@@ -33,6 +34,7 @@ export const theme = {
         cardHex: '#CCCCCC',
         cardSubHex: 'rgba(38, 43, 51, 0.00)',
         displayCardHex: '#D6D6D6',
-        sizeHex: '#D3D3D3'
+        sizeHex: '#D3D3D3',
+        danger: "#b30000",
     }
 }

@@ -6,3 +6,5 @@ export const CART_ITEM = "Cart_Item"
 export const PAYMENT = "Payment";
 export const FAVOURITES = "Favourites"
 export const ORDER_HISTORY = "Order_History";
+export const LOGIN = "Login";
+export const REGISTER = "Register";

@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeContext } from '../../themes/themeContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners';
-import { CART_ITEM, PAYMENT } from '../../constants/routeName';
+import { CART_ITEM, LOGIN, PAYMENT } from '../../constants/routeName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../icons';
@@ -31,7 +31,7 @@ const getTheme = async ()=> {
   return null
 }  
 
-const TopTabs = ({ style, item, text }: TopTabProps) => {
+const TopTabs = ({ style, item, text, noRightPocket }: TopTabProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const [darkMode, setDarkMode] = React.useState<boolean>();
@@ -100,7 +100,7 @@ const TopTabs = ({ style, item, text }: TopTabProps) => {
         style={[styles.left_tab, { borderColor: theme.secondarySubBgHex }]}
       >
         {
-          route.name === PAYMENT || route.name === CART_ITEM 
+          route.name === PAYMENT || route.name === CART_ITEM || route.name === LOGIN
           ? 
             <TouchableOpacity style={styles.btn} onPress={()=>navigation.goBack()}>
               <Icon type="feather" name="chevron-left" size={27} color={theme.arrowHex} />
@@ -118,23 +118,27 @@ const TopTabs = ({ style, item, text }: TopTabProps) => {
 
       <Text style={[styles.text, { color: theme.textHex }]}>{text}</Text>
 
-      <LinearGradient
-        colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
-        locations={[0.0428, 0.9352]}
-        style={[styles.right_tab, { borderColor: theme.secondarySubBgHex }]}
-      >
-        {
-          route.name === CART_ITEM 
-          ? 
-            <TouchableOpacity style={styles.btn} onPress={()=>handleFavourites()}>
-              <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
-            </TouchableOpacity>
-          : 
-          <TouchableOpacity style={styles.btn}>
-              <Icon type="ionicons" name="ios-people-outline" size={24} color={theme.textHex} style={{ opacity: darkMode ? 0.4 : 0.7 }} />
-            </TouchableOpacity>
-        }
-      </LinearGradient>
+      {noRightPocket 
+        ? <View style={{ width: width * 0.1 }} /> 
+        :
+        <LinearGradient
+          colors={[ theme.secondarySubBgHex, theme.backgroundHex]}
+          locations={[0.0428, 0.9352]}
+          style={[styles.right_tab, { borderColor: theme.secondarySubBgHex }]}
+        >
+          {
+            route.name === CART_ITEM 
+            ? 
+              <TouchableOpacity style={styles.btn} onPress={()=>handleFavourites()}>
+                <Icon name="heart" size={20} color={toggleHeart ? theme.heartHex : theme.textHex} style={{ opacity: !toggleHeart ? 0.4 : 1 }} />
+              </TouchableOpacity>
+            : 
+            <TouchableOpacity style={styles.btn}>
+                <Icon type="ionicons" name="ios-people-outline" size={24} color={theme.textHex} style={{ opacity: darkMode ? 0.4 : 0.7 }} />
+              </TouchableOpacity>
+          }
+        </LinearGradient>
+      }
     </View>
   )
 }

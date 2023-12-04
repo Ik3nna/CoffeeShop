@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CART, CART_ITEM, FAVOURITES, HOME, MAIN, ORDER_HISTORY, PAYMENT, SPLASH } from '../constants/routeName';
+import { CART, CART_ITEM, FAVOURITES, HOME, LOGIN, MAIN, ORDER_HISTORY, PAYMENT, REGISTER, SPLASH } from '../constants/routeName';
 import { View, StyleSheet } from 'react-native';
 import Splash from '../screens/splash';
 import Payment from '../screens/payment';
@@ -15,6 +15,8 @@ import { BlurView } from 'expo-blur';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import Login from '../screens/login';
+import Register from '../screens/register';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -97,6 +99,8 @@ export function MainNavigator () {
       <Stack.Screen name={MAIN} component={BottomTabNavigator} />
       <Stack.Screen name={PAYMENT} component={Payment} options={{ contentStyle: { backgroundColor: theme.backgroundHex  }}} />
       <Stack.Screen name={CART_ITEM} component={CartItem} options={{ contentStyle: { backgroundColor: theme.backgroundHex  }}} />
+      <Stack.Screen name={LOGIN} component={Login} options={{ contentStyle: { backgroundColor: theme.backgroundHex }}} />
+      <Stack.Screen name={REGISTER} component={Register} options={{ contentStyle: { backgroundColor: theme.backgroundHex }}} />
     </Stack.Navigator>
   );
 }
