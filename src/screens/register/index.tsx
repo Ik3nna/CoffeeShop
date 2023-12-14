@@ -42,8 +42,8 @@ const Register = ({ navigation }: NavigationProps) => {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
-      <TopTabs text='Sign Up' noRightPocket />
+    <SafeAreaView style={styles.container}>
+      <TopTabs text='Register' noRightPocket />
 
         <View style={styles.form_container}>
             <Controller
@@ -110,7 +110,7 @@ const Register = ({ navigation }: NavigationProps) => {
 
         <View style={styles.btn_container}>
             <Button 
-                content='Sign Up'
+                content='Register'
                 bgColor={theme.activeHex}
                 color={isLoading ? theme.activeHex : theme.textHex}
                 loading={isLoading}
@@ -119,17 +119,6 @@ const Register = ({ navigation }: NavigationProps) => {
                 radius={15}
                 size={getFontSize(0.025)}
                 onClick={handleSubmit(onSubmit)}
-            />
-
-            <Button 
-                content='Back'
-                bgColor={theme.activeHex}
-                color={theme.textHex}
-                width= {width - (width * 0.08)}
-                height={width * 0.13}
-                radius={15}
-                size={getFontSize(0.025)}
-                onClick={()=>navigation.navigate(CART)}
             />
         </View>
     </SafeAreaView>

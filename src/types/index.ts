@@ -90,6 +90,18 @@ export type CartListProps = {
     innerArr: any
 }
 
+// OrderHistoryList type
+export type OrderHistoryListProps = {
+    id: string,
+    date: string,
+    time: string,
+    image: any,
+    name: string,
+    ingredient: string,
+    total: string,
+    innerArr: any
+}
+
 // Text Input type
 export type InputProps = {
     placeholder: string,

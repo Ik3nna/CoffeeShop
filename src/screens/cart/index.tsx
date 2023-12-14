@@ -1,5 +1,5 @@
-import { Dimensions, FlatList, Image, Platform, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useRef } from 'react';
+import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemeContext } from "../../themes/themeContext";
 import TopTabs from '../../components/topTabs';
@@ -54,7 +54,8 @@ const Cart = ({ navigation }: NavigationProps) => {
       if (user) {
         navigation.navigate(PAYMENT)
       } else {
-        navigation.navigate(LOGIN)
+        // navigation.navigate(LOGIN)
+        navigation.navigate(PAYMENT)
       }
     })
   }

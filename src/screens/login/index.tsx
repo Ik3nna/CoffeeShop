@@ -42,7 +42,7 @@ const Login = ({ navigation }: NavigationProps) => {
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
+    <SafeAreaView style={styles.container}>
       <TopTabs text='Login' noRightPocket />
 
         <View style={styles.form_container}>
@@ -105,7 +105,7 @@ const Login = ({ navigation }: NavigationProps) => {
             />
 
             <Button 
-                content='Signup'
+                content='Register'
                 bgColor={theme.activeHex}
                 color={theme.textHex}
                 width= {width - (width * 0.08)}

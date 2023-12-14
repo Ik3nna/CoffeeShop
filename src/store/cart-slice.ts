@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CartListProps } from "../types";
+import { CartListProps, OrderHistoryListProps } from "../types";
 
 const initialCartState: CartListProps[] = [];
+const initialOrderHistoryList: OrderHistoryListProps[] = []
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: { 
     cartList: initialCartState,
+    orderHistoryList: initialOrderHistoryList,
     totalPrice: 0
   },
   reducers: {
@@ -97,6 +99,13 @@ const cartSlice = createSlice({
           );
         }, 0).toFixed(2)
       );
+    },
+    checkoutFromCart (state, action: PayloadAction<OrderHistoryListProps>) {
+      const item = action.payload;
+
+      state.orderHistoryList.push(item);
+
+      state.cartList = [];
     }
   }
 })

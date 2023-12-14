@@ -1,7 +1,5 @@
 import { Image, StyleSheet, View, Dimensions } from 'react-native'
 import React, { useCallback, useState } from 'react'
-import { useThemeContext } from "../../themes/themeContext"
-import { StatusBar } from 'expo-status-bar'
 import coffeeCup from "../../assets/images/splash-image.png"
 import { NavigationProps } from '../../types'
 import { MAIN } from '../../constants/routeName'
@@ -11,7 +9,6 @@ const { width } = Dimensions.get("window");
 
 const Splash = ({ navigation }: NavigationProps) => {
   const [isMounted, setIsMounted] = useState(true);
-  const theme = useThemeContext();
 
   useFocusEffect(
     useCallback(() => {
@@ -33,7 +30,7 @@ const Splash = ({ navigation }: NavigationProps) => {
   return (
     <>
       {isMounted &&
-        <View style={[styles.container, { backgroundColor: theme.backgroundHex }]}>
+        <View style={styles.container}>
           <View style={styles.img_container}>
             <Image style={styles.image} source={coffeeCup} alt='coffee-cup' />
           </View>
