@@ -91,6 +91,7 @@ const Payment = () => {
     cartData: cartList, 
     total: totalPrice,
     date: formatDate(),
+    itemID: today.getSeconds(),
     time: formatTime()
   }
 

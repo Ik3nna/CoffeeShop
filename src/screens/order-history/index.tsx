@@ -82,7 +82,7 @@ const OrderHistory = () => {
               : <FlatList 
                   data={orderList}
                   showsVerticalScrollIndicator={false}
-                  keyExtractor={item => item.time}
+                  keyExtractor={item => item.itemID}
                   style={styles.flat_list}
                   ListFooterComponent={<View style={{ height: BottomTabBarHeight * 2 }} />}
                   renderItem={({item})=> (
