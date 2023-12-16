@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useThemeContext } from '../../themes/themeContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { EventRegister } from 'react-native-event-listeners';
-import { CART_ITEM, LOGIN, PAYMENT, REGISTER } from '../../constants/routeName';
+import { CART, CART_ITEM, LOGIN, PAYMENT, REGISTER } from '../../constants/routeName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../icons';
@@ -35,7 +35,7 @@ const TopTabs = ({ style, item, text, noRightPocket }: TopTabProps) => {
   const theme = useThemeContext();
   const route = useRoute();
   const [darkMode, setDarkMode] = React.useState<boolean>();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const itemsList = useSelector((state: RootState)=> state.favourite.itemsList);
   const [toggleHeart, setToggleHeart] = useState(
@@ -102,7 +102,7 @@ const TopTabs = ({ style, item, text, noRightPocket }: TopTabProps) => {
         {
           route.name === PAYMENT || route.name === CART_ITEM || route.name === LOGIN || route.name === REGISTER
           ? 
-            <TouchableOpacity style={styles.btn} onPress={()=>navigation.goBack()}>
+            <TouchableOpacity style={styles.btn} onPress={()=>route.name === PAYMENT ? navigation.navigate(CART) : navigation.goBack()}>
               <Icon type="feather" name="chevron-left" size={27} color={theme.arrowHex} />
             </TouchableOpacity>
           : 

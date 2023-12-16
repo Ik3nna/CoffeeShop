@@ -52,12 +52,13 @@ export type FlashCardProps = {
     h: number,
     borderRadius: number,
     icon?: any,
-    size: number,
+    size?: number,
     font: string,
     bgColor: string,
     color: string,
-    content: string,
-    border?: string
+    content: any,
+    border?: string,
+    style?: any
 }
 
 // FavouriteList type
@@ -92,14 +93,10 @@ export type CartListProps = {
 
 // OrderHistoryList type
 export type OrderHistoryListProps = {
-    id: string,
+    cartData: CartListProps,
+    total: string,
     date: string,
     time: string,
-    image: any,
-    name: string,
-    ingredient: string,
-    total: string,
-    innerArr: any
 }
 
 // Text Input type

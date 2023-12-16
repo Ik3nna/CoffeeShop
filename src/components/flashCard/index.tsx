@@ -2,11 +2,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { FlashCardProps } from '../../types'
 
-const FlashCard = ({ w, h, borderRadius, icon, size, font, bgColor, color, content, border }: FlashCardProps) => {
+const FlashCard = ({ w, h, borderRadius, icon, size, font, bgColor, color, content, border, style }: FlashCardProps) => {
   return (
     <View 
       style={[
         styles.container, 
+        style,
         { 
           width: w, 
           height: h, 

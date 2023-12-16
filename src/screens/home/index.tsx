@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CART_ITEM } from '../../constants/routeName';
 
-const { width, height } = Dimensions.get("window");
 
 const Home = () => {
   const theme = useThemeContext();

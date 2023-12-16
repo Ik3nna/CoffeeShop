@@ -54,8 +54,7 @@ const Cart = ({ navigation }: NavigationProps) => {
       if (user) {
         navigation.navigate(PAYMENT)
       } else {
-        // navigation.navigate(LOGIN)
-        navigation.navigate(PAYMENT)
+        navigation.navigate(LOGIN)
       }
     })
   }

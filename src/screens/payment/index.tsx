@@ -88,7 +88,7 @@ const Payment = () => {
   }
 
   const item = {
-    ...cartList, 
+    cartData: cartList, 
     total: totalPrice,
     date: formatDate(),
     time: formatTime()
@@ -115,9 +115,9 @@ const Payment = () => {
           </View>
         : <View style={{height: height - 0.14 * height}}>
           <View style={styles.img_container}>
-            {imgList.map((item: any)=>(
+            {imgList.map((item: any, index)=>(
               <TouchableOpacity 
-                key={item.index} 
+                key={index} 
                 style={[styles.btn, { 
                   borderColor: item.index === 'Credit Card' && theme.activeHex,
                   borderWidth: item.index === 'Credit Card' ? 2 : 0,
