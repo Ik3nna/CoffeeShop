@@ -106,6 +106,9 @@ const cartSlice = createSlice({
       state.orderHistoryList.push(item);
 
       state.cartList = [];
+    },
+    downloadOrderHistory (state) {
+      state.orderHistoryList = [];
     }
   }
 })

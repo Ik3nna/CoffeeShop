@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useThemeContext } from '../../themes/themeContext'
 import TopTabs from '../../components/topTabs'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store'
 import LottieView from 'lottie-react-native';
 import DisplayCard from '../../components/displayCard';
@@ -16,6 +16,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../config/firebaseConfig';
 import { useFocusEffect } from '@react-navigation/native';
 import { CartListProps } from '../../types';
+import { cartActions } from '../../store/cart-slice'
 
 // assets
 import coffeeCup from "../../assets/images/splash-image.png"
@@ -28,6 +29,7 @@ const OrderHistory = () => {
   const theme = useThemeContext();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const animation = useRef(null);
+  const dispath = useDispatch();
   const BottomTabBarHeight = useBottomTabBarHeight();
   const orderList = useSelector((state: RootState)=>state.cart.orderHistoryList);
   const [showDownloadLottie, setShowDownloadLottie] = useState(false);
@@ -40,6 +42,11 @@ const OrderHistory = () => {
         setIsAuthenticated(false);
       }
     })
+  }
+
+  const downloadOrderHistory = () => {
+    setShowDownloadLottie(true);
+    dispath(cartActions.downloadOrderHistory())
   }
 
   useFocusEffect(
@@ -179,7 +186,7 @@ const OrderHistory = () => {
                       height={width * 0.13}
                       radius={15}
                       size={getFontSize(0.021)}
-                      onClick={()=>setShowDownloadLottie(true)}
+                      onClick={()=>downloadOrderHistory()}
                     />
                   </BlurView>
                 </DisplayCard>
